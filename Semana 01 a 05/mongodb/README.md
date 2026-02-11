@@ -22,4 +22,4 @@ Nombre de la base de datos: `libreria`
 
 # Presentacion
 
-![Presentación intro a Mongo DB y no-sql](./presentaciones/base%20de%20datos%20no%20sql.pdf)
+![Presentación intro a Mongo DB y no-sql](./presentaciones/base%20de%20datos%20no%20sql.pdf) 

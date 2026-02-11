@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplos HTML + JavaScript</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    section { margin-bottom: 30px; }
+    input, button { margin-top: 5px; display: block; }
+    .resultado { color: green; font-weight: bold; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <h1>Ejemplos HTML y JavaScript</h1>
+  <!--Ejemplos iniciales requeridos para entender el front end completo-->
+  <!-- 1. Crear formulario simple en HTML -->
+  <section>
+    <h2>1. Formulario simple</h2>
+    <form id="formulario-ejemplo">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" required />
+      <button type="submit">Enviar</button>
+    </form>
+    <p id="resultado-formulario" class="resultado"></p>
+  </section>
+
+  <!-- 2. Usar fetch para hacer una petición -->
+  <section>
+    <h2>2. Petición con fetch</h2>
+    <button id="btn-fetch">Consultar API pública</button>
+    <p id="resultado-fetch" class="resultado"></p>
+  </section>
+
+  <!-- 3. Capturar eventos click y submit -->
+  <section>
+    <h2>3. Captura de eventos</h2>
+    <button id="btn-click">Haz click aquí</button>
+    <p id="resultado-click" class="resultado"></p>
+  </section>
+
+  <!-- 4. Insertar elementos HTML desde JavaScript -->
+  <section>
+    <h2>4. Insertar elementos desde JS</h2>
+    <button id="btn-insertar">Agregar nuevo elemento</button>
+    <div id="contenedor-elementos"></div>
+  </section>
+
+  <script>
+    // 1. Captura de evento submit
+    document.getElementById('formulario-ejemplo').addEventListener('submit', function (e) {
+      e.preventDefault(); // evita que se recargue la página
+      const nombre = document.getElementById('nombre').value;
+      document.getElementById('resultado-formulario').textContent = `Hola, ${nombre}!`;
+    });
+
+    // 2. Fetch a API pública
+    document.getElementById('btn-fetch').addEventListener('click', () => {
+      fetch('https://jsonplaceholder.typicode.com/todos/1')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('resultado-fetch').textContent = `Título recibido: "${data.title}"`;
+        })
+        .catch(error => {
+          document.getElementById('resultado-fetch').textContent = 'Error al consultar la API';
+        });
+    });
+
+    // 3. Evento click
+    document.getElementById('btn-click').addEventListener('click', () => {
+      document.getElementById('resultado-click').textContent = '¡Hiciste click!';
+    });
+
+    // 4. Insertar elemento HTML desde JS
+    document.getElementById('btn-insertar').addEventListener('click', () => {
+      const nuevoElemento = document.createElement('p');
+      nuevoElemento.textContent = 'Elemento agregado dinámicamente.';
+      nuevoElemento.style.color = 'blue';
+      document.getElementById('contenedor-elementos').appendChild(nuevoElemento);
+    });
+  </script>
+
+</body>
+</html>

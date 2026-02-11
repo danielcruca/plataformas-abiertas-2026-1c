@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Personaje Dragon Ball</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f0f0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    form {
+      margin-bottom: 2rem;
+    }
+
+    input[type="number"] {
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 100px;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+      margin-right: 0.5rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      background-color: #ff6600;
+      color: white;
+      cursor: pointer;
+    }
+
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 150px;
+      height: auto;
+      border-radius: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h2 {
+      margin: 0.5rem 0;
+      font-size: 1.5rem;
+    }
+
+    .card p {
+      margin: 0.25rem 0;
+      color: #555;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Buscar personaje Dragon Ball</h1>
+
+<form id="character-form">
+  <input type="number" id="character-id" min="1" placeholder="ID" required />
+  <button type="submit">Buscar</button>
+</form>
+
+<div class="card" id="character-card">
+  <p>Escribe un ID arriba y presiona buscar</p>
+</div>
+
+<script>
+  const form = document.getElementById("character-form");
+  const input = document.getElementById("character-id");
+  const card = document.getElementById("character-card");
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const id = input.value.trim();
+    if (!id) return;
+
+    card.innerHTML = "<p>Cargando personaje...</p>";
+    cargarPersonaje(id);
+   
+  });
+
+  function cargarPersonaje(id) {
+    // Url de la api de DRAGON BALL.
+      fetch(`https://dragonball-api.com/api/characters/${id}`)
+      // lEE LA RESPUESTA.
+      .then(response => {
+        // Si hay un error muestra esto.
+        if (!response.ok) throw new Error("Personaje no encontrado");
+        return response.json();
+      })
+      // Si no hay ningun error muestra la informacion.
+      .then(data => {
+        card.innerHTML = `
+          <img src="${data.image}" alt="${data.name}">
+          <h2>${data.name}</h2>
+          <p><strong>Raza:</strong> ${data.race}</p>
+          <p><strong>Género:</strong> ${data.gender}</p>
+          <p><strong>Ki:</strong> ${data.ki}</p>
+        `;
+      })
+      .catch(error => {
+        card.innerHTML = `<p style="color:red;">${error.message}</p>`;
+        console.error(error);
+      }); 
+  }
+</script>
+
+</body>
+</html>

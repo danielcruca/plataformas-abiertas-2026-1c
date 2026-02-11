@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Libros</title>
+  <style>
+    table {
+      width: 90%;
+      margin: 2rem auto;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.75rem;
+      text-align: left;
+    }
+    th {
+      background-color: #004466;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center;">Listar todo los Libros</h1>
+  <table id="tabla-libros">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Nacionalidad</th>
+        <th>Precio</th>
+        <th>Stock</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+   //
+    const url = `http://127.0.0.1:5000/libreria/api/v1/libros`;
+
+    /*
+    Esto es usado solo si usamos token.
+    const token = "SU_TOKEN_AQUI"; 
+
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    })*/
+    fetch(url).then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      const tbody = document.querySelector("#tabla-libros tbody");
+      tbody.innerHTML = ""; // limpia
+
+      data.forEach(libro => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${libro.titulo}</td>
+          <td>${libro.autor.nombre} ${libro.autor.apellido}</td>
+          <td>${libro.autor.nacionalidad}</td>
+          <td>$${libro.precio}</td>
+          <td>${libro.cantidad_stock}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("Error cargando libros:", err);
+    });
+  </script>
+</body>
+</html>
