@@ -65,6 +65,7 @@ Supongamos que tienes la siguiente estructura:
 mi_proyecto/
 │
 ├── persona
+│   ├── __init__.py
 │   ├── persona.py
 └── main.py
 ```
