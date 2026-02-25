@@ -65,7 +65,7 @@ Supongamos que tienes la siguiente estructura:
 mi_proyecto/
 │
 ├── persona
-│   ├── __init__.py
+│   ├── __init__.py #Archivo para indicar a python que trate esta carpeta como un modulo
 │   ├── persona.py
 └── main.py
 ```
